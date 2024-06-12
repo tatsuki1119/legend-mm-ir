@@ -72,7 +72,7 @@ def before_request():
     print(f"{remote_addr} - [{now}] {request.path}")
 
     request_path_split = request_path.split("/")
-    request_path_split = (request_path_split + ["", ""])[1:]
+    request_path_split = request_path_split + ["", ""]
 
     path_not_login_only = ["login"]
 
