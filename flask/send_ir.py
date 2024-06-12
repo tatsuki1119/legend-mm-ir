@@ -6,7 +6,7 @@ from time import sleep
 import smbus
 
 # データ配置用ディレクトリ
-DATA_DIR = "/home/momo/piz/flask/ir_data"
+DATA_DIR = "/home/tatsu/piz/flask/ir_data"
 
 
 def json_to_dict(input_path: str) -> dict:
@@ -70,7 +70,8 @@ def send_signal(signal: str) -> None:
 
 def main():
     status = json_to_dict("status.json")
-    s_mode = status["mode"]
+    # s_mode = status["mode"]
+    s_mode = "auto"
     s_pattern = status["pattern"]
     s_color = status["color"]
     loop_count = 0
@@ -89,7 +90,42 @@ def main():
                 s_pattern = "fixed"
 
         if s_mode == "auto":
-            signal_val = "w-on"
+            interval = 110
+            loop_count = (loop_count % interval) + 1
+            if loop_count <= 5:
+                send_signal(SIGNAL_DATA_DICT.get("w-on"))
+            elif loop_count <= 10:
+                send_signal(SIGNAL_DATA_DICT.get("r-on"))
+            elif loop_count <= 15:
+                send_signal(SIGNAL_DATA_DICT.get("g-on"))
+            elif loop_count <= 20:
+                send_signal(SIGNAL_DATA_DICT.get("b-on"))
+            elif loop_count <= 25:
+                send_signal(SIGNAL_DATA_DICT.get("c-on"))
+            elif loop_count <= 30:
+                send_signal(SIGNAL_DATA_DICT.get("m-on"))
+            elif loop_count <= 35:
+                send_signal(SIGNAL_DATA_DICT.get("y-on"))
+            elif loop_count <= 40:
+                send_signal(SIGNAL_DATA_DICT.get("momo-on"))
+            elif loop_count <= 50:
+                send_signal(SIGNAL_DATA_DICT.get("w-fadein"))
+            elif loop_count <= 60:
+                send_signal(SIGNAL_DATA_DICT.get("r-fadein"))
+            elif loop_count <= 70:
+                send_signal(SIGNAL_DATA_DICT.get("g-fadein"))
+            elif loop_count <= 80:
+                send_signal(SIGNAL_DATA_DICT.get("b-fadein"))
+            elif loop_count <= 90:
+                send_signal(SIGNAL_DATA_DICT.get("c-fadein"))
+            elif loop_count <= 100:
+                send_signal(SIGNAL_DATA_DICT.get("m-fadein"))
+            elif loop_count <= 110:
+                send_signal(SIGNAL_DATA_DICT.get("y-fadein"))
+            else:
+                send_signal(SIGNAL_DATA_DICT.get("momo-on"))
+            sleep(0.2)
+            continue
         elif s_mode == "custom":
             if s_pattern == "fixed":
                 send_signal(SIGNAL_DATA_DICT.get(f"{s_color}-on"))
@@ -152,6 +188,40 @@ def main():
                 rainbow_list = ["r", "m", "b", "c", "g", "y"]
                 send_signal(SIGNAL_DATA_DICT.get(f"{rainbow_list[loop_count - 1]}-on"))
                 sleep(0.1)
+            if s_pattern == "gj":
+                interval = 32
+                loop_count = (loop_count % interval) + 1
+                on_count_list = [1, 3, 5, 9, 11, 13, 17, 19, 21, 23, 25, 27, 29]
+                if loop_count in on_count_list:
+                    send_signal(SIGNAL_DATA_DICT.get(f"{s_color}-on"))
+                else:
+                    send_signal(SIGNAL_DATA_DICT.get("off"))
+                sleep(0.12)
+            if s_pattern == "ds":
+                interval = 128
+                loop_count = (loop_count % interval) + 1
+                on_count_list = [
+                    1,
+                    9,
+                    17,
+                    19,
+                    21,
+                    29,
+                    37,
+                    39,
+                    41,
+                    49,
+                    51,
+                    53,
+                    57,
+                    59,
+                    61,
+                ]
+                if loop_count in on_count_list:
+                    send_signal(SIGNAL_DATA_DICT.get(f"{s_color}-on"))
+                else:
+                    send_signal(SIGNAL_DATA_DICT.get("off"))
+                sleep(0.021)
         else:
             signal_val = "momo"
             send_signal(SIGNAL_DATA_DICT.get(signal_val))

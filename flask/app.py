@@ -10,14 +10,24 @@ from flask import Flask, abort, redirect, render_template, request, session, url
 from flask_session import Session
 
 APP_PASSWORD = "0303"
-APP_DIR = "/home/momo/piz/flask"
+APP_DIR = "/home/tatsu/piz/flask"
 
 # データ配置用ディレクトリ
-DATA_DIR = "/home/momo/piz/flask/ir_data"
+DATA_DIR = "/home/tatsu/piz/flask/ir_data"
 
 MODE_LIST = ["custom"]
 COLOR_LIST = ["momo", "w", "r", "g", "b", "c", "m", "y"]
-PATTERN_LIST = ["fixed", "blink1", "blink2", "blink3", "fadein", "flash", "rainbow"]
+PATTERN_LIST = [
+    "fixed",
+    "blink1",
+    "blink2",
+    "blink3",
+    "fadein",
+    "flash",
+    "rainbow",
+    "gj",
+    "ds",
+]
 
 
 def json_to_dict(input_path: str) -> dict:
@@ -40,10 +50,10 @@ def dict_to_json(input_dict: dict, output_path: str) -> None:
 
 
 app = Flask(__name__)
-app_prefix = ""
+app_prefix = "/app"
 
 # sessionのシークレットキー
-app.secret_key = "momo-pizero"
+app.secret_key = "tatsuki-piz"
 # sessionの有効期限
 app.permanent_session_lifetime = timedelta(hours=72)
 
@@ -72,9 +82,9 @@ def before_request():
     print(f"{remote_addr} - [{now}] {request.path}")
 
     request_path_split = request_path.split("/")
-    request_path_split = request_path_split + ["", ""]
+    request_path_split = (request_path_split + ["", ""])[1:]
 
-    # path_not_login_only = ["login"]
+    path_not_login_only = ["login"]
 
     # if is_logged_in:
     #     # ログインしていたらOK
@@ -99,38 +109,43 @@ def handle_exception(e):
     return render_template("_http_error.html", e=e), e.code
 
 
+@app.route("/")
+def root_index():
+    return redirect(url_for("index"))
+
+
 @app.route(app_prefix + "/")
 def index():
     return redirect(url_for("remocon"))
 
 
-# @app.route(app_prefix + "/login")
-# def login():
-#     return render_template(
-#         "login.html",
-#         error=request.args.get("error"),
-#     )
+@app.route(app_prefix + "/login")
+def login():
+    return render_template(
+        "login.html",
+        error=request.args.get("error"),
+    )
 
 
-# @app.route(app_prefix + "/login", methods=["POST"])
-# def login_post():
-#     input_password = request.form["input_password"]
-#     redirect_to = request.form.get("redirect_to")
+@app.route(app_prefix + "/login", methods=["POST"])
+def login_post():
+    input_password = request.form["input_password"]
+    redirect_to = request.form.get("redirect_to")
 
-#     if input_password == APP_PASSWORD:  # ログイン成功
-#         session["piz_auth"] = True
-#         # リダイレクト
-#         if redirect_to == "None" or redirect_to is None:
-#             redirect_to = url_for("index")
-#         return redirect(redirect_to)
-#     else:  # ログイン失敗
-#         return redirect(url_for("login", redirect_to=redirect_to, error=1))
+    if input_password == APP_PASSWORD:  # ログイン成功
+        session["piz_auth"] = True
+        # リダイレクト
+        if redirect_to == "None" or redirect_to is None:
+            redirect_to = url_for("index")
+        return redirect(redirect_to)
+    else:  # ログイン失敗
+        return redirect(url_for("login", redirect_to=redirect_to, error=1))
 
 
-# @app.route(app_prefix + "/logout")
-# def logout():
-#     session.pop("piz_auth", None)
-#     return redirect(url_for("login"))
+@app.route(app_prefix + "/logout")
+def logout():
+    session.pop("piz_auth", None)
+    return redirect(url_for("login"))
 
 
 @app.route(app_prefix + "/remocon")
