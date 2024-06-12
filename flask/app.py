@@ -74,24 +74,24 @@ def before_request():
     request_path_split = request_path.split("/")
     request_path_split = request_path_split + ["", ""]
 
-    path_not_login_only = ["login"]
+    # path_not_login_only = ["login"]
 
-    if is_logged_in:
-        # ログインしていたらOK
-        return None
+    # if is_logged_in:
+    #     # ログインしていたらOK
+    #     return None
 
-    elif request_path_split[1] in path_not_login_only:
-        # ログインしていたらトップへ
-        if is_logged_in:
-            return redirect(url_for("index"))
-        else:
-            return None
+    # elif request_path_split[1] in path_not_login_only:
+    #     # ログインしていたらトップへ
+    #     if is_logged_in:
+    #         return redirect(url_for("index"))
+    #     else:
+    #         return None
 
-    elif not is_logged_in:
-        # ログインしていなかったらログインへ
-        return redirect(url_for("login", redirect_to=request.url))
+    # elif not is_logged_in:
+    #     # ログインしていなかったらログインへ
+    #     return redirect(url_for("login", redirect_to=request.url))
 
-    return abort(403)
+    # return abort(403)
 
 
 @app.errorhandler(HTTPException)
@@ -104,33 +104,33 @@ def index():
     return redirect(url_for("remocon"))
 
 
-@app.route(app_prefix + "/login")
-def login():
-    return render_template(
-        "login.html",
-        error=request.args.get("error"),
-    )
+# @app.route(app_prefix + "/login")
+# def login():
+#     return render_template(
+#         "login.html",
+#         error=request.args.get("error"),
+#     )
 
 
-@app.route(app_prefix + "/login", methods=["POST"])
-def login_post():
-    input_password = request.form["input_password"]
-    redirect_to = request.form.get("redirect_to")
+# @app.route(app_prefix + "/login", methods=["POST"])
+# def login_post():
+#     input_password = request.form["input_password"]
+#     redirect_to = request.form.get("redirect_to")
 
-    if input_password == APP_PASSWORD:  # ログイン成功
-        session["piz_auth"] = True
-        # リダイレクト
-        if redirect_to == "None" or redirect_to is None:
-            redirect_to = url_for("index")
-        return redirect(redirect_to)
-    else:  # ログイン失敗
-        return redirect(url_for("login", redirect_to=redirect_to, error=1))
+#     if input_password == APP_PASSWORD:  # ログイン成功
+#         session["piz_auth"] = True
+#         # リダイレクト
+#         if redirect_to == "None" or redirect_to is None:
+#             redirect_to = url_for("index")
+#         return redirect(redirect_to)
+#     else:  # ログイン失敗
+#         return redirect(url_for("login", redirect_to=redirect_to, error=1))
 
 
-@app.route(app_prefix + "/logout")
-def logout():
-    session.pop("piz_auth", None)
-    return redirect(url_for("login"))
+# @app.route(app_prefix + "/logout")
+# def logout():
+#     session.pop("piz_auth", None)
+#     return redirect(url_for("login"))
 
 
 @app.route(app_prefix + "/remocon")
