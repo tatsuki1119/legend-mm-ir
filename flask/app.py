@@ -99,11 +99,6 @@ def handle_exception(e):
     return render_template("_http_error.html", e=e), e.code
 
 
-@app.route("/")
-def root_index():
-    return redirect(url_for("index"))
-
-
 @app.route(app_prefix + "/")
 def index():
     return redirect(url_for("remocon"))
