@@ -40,7 +40,7 @@ def dict_to_json(input_dict: dict, output_path: str) -> None:
 
 
 app = Flask(__name__)
-app_prefix = "/app"
+app_prefix = ""
 
 # sessionのシークレットキー
 app.secret_key = "momo-pizero"
