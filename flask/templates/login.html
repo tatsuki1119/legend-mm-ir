@@ -1,0 +1,74 @@
+{% extends "_layout.html" %}
+
+<!-- title -->
+{% block title %}
+Login - {{ super() }}
+{% endblock %}
+
+<!-- head -->
+{% block head %}
+<style>
+    .login_wrapper {
+        height: 50vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .login_wrapper {
+        text-align: center;
+    }
+
+    .error_message {
+        text-align: center;
+    }
+
+    .login_input {
+        font-size: large;
+        text-align: center;
+        background-color: #F09199;
+        border: solid 1px #550000;
+        color: #550000;
+    }
+
+    .login_submit {
+        font-size: 24px;
+        background-color: #F09199;
+        border: solid 1px #550000;
+        border-radius: 15px;
+        padding: 5px 10px;
+    }
+
+    .input_wrapper {
+        margin-bottom: 20px;
+    }
+
+    .submit_wrapper {
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}
+
+<!-- body -->
+{% block main %}
+
+<form action="{{ url_for('login') }}" method="post">
+
+    <div class="login_wrapper">
+        <div>
+            {% if error == "1" %}
+            <p class="error_message">wrong password.</p>
+            {% endif %}
+            <p class="input_wrapper">
+                <input type="password" inputmode="numeric" name="input_password" class="login_input" required>
+            </p>
+            <input type="hidden" name="redirect_to" value="{{ request.args.get('redirect_to') }}">
+            <p class="submit_wrapper">
+                <input type="submit" value="&#x1f382;" class="login_submit">
+            </p>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}

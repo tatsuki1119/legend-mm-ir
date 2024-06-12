@@ -1,0 +1,80 @@
+{% extends "_layout.html" %}
+
+<!-- title -->
+{% block title %}
+Remocon - {{ super() }}
+{% endblock %}
+
+<!-- head -->
+{% block head %}
+<script>
+    $(document).ready(function () {
+        $('.pwr_on').click(function () {
+            $.get('pwr-on');
+            $.get('pattern', { 'pattern': 'fixed' });
+        });
+        $('.pwr_off').click(function () {
+            $.get('pwr-off');
+        });
+        $('.momo').click(function () {
+            $.get('color', { 'color': 'momo' });
+        });
+        $('.momo').click(function () {
+            $.get('color', { 'color': 'momo' });
+        });
+        $('.color_btn').click(function () {
+            var color_val = $(this).data('color');
+            $.get('color', { 'color': color_val });
+        });
+        $('.pattern_btn').click(function () {
+            var pattern_val = $(this).data('pattern');
+            $.get('pattern', { 'pattern': pattern_val });
+        });
+    });
+
+</script>
+{% endblock %}
+
+<!-- body -->
+{% block main %}
+
+<div class="momo_area">
+    <img src="/static/img/momo.png" alt="momo" class="momo">
+</div>
+
+<div class="color_area">
+    <div class="color_wrapper">
+        <div class="color_btn" data-color="w" style="background-color: #ffffff;"></div>
+        <div class="color_btn" data-color="r" style="background-color: #ff0000;"></div>
+        <div class="color_btn" data-color="g" style="background-color: #00ff00;"></div>
+        <div class="color_btn" data-color="b" style="background-color: #0000ff;"></div>
+    </div>
+    <div class="color_wrapper">
+        <div class="color_btn"></div>
+        <div class="color_btn" data-color="c" style="background-color: #00ffff;"></div>
+        <div class="color_btn" data-color="m" style="background-color: #ff00ff;"></div>
+        <div class="color_btn" data-color="y" style="background-color: #ffff00;"></div>
+    </div>
+</div>
+
+<div class="pattern_area">
+    <div class="pattern_wrapper">
+        <div class="pwr_on black_box" data-pattern="fixed"><span>ON</span></div>
+        <div class="pwr_off black_box" data-pattern="fixed"><span>OFF</span></div>
+    </div>
+    <div class="pattern_wrapper">
+        <div class="pattern_btn black_box" data-pattern="blink1">点滅1</div>
+        <div class="pattern_btn black_box" data-pattern="blink2">点滅2</div>
+        <div class="pattern_btn black_box" data-pattern="blink3">点滅3</div>
+    </div>
+    <div class="pattern_wrapper">
+        <div class="pattern_btn black_box" data-pattern="fadein">*フェードイン</div>
+        <div class="pattern_btn black_box" data-pattern="flash">フラッシュ</div>
+    </div>
+    <div class="pattern_wrapper">
+        <div class="pattern_btn black_box" data-pattern="rainbow">Rainbow</div>
+    </div>
+
+</div>
+
+{% endblock %}

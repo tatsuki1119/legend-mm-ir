@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover user-scalable=0">
+    <title>{% block title %}piz{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+    <!-- pwa -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="true">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="/static/manifest.json">
+    <script>
+        // 下セーフエリア取得
+        let safeAreaInsetBottom = getComputedStyle(document.documentElement).getPropertyValue('--safeareainsetbottom');
+    </script>
+    {% block head %} {% endblock %}
+
+    <style>
+        :root {
+            --safeareainsetbottom: env(safe-area-inset-bottom);
+        }
+
+        * {
+            box-sizing: border-box;
+            word-wrap: break-word;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+        }
+
+        a {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            word-wrap: break-word;
+            text-decoration: none;
+        }
+
+        div {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            background-color: #550000;
+
+            color: #ffffff;
+            font-family: serif;
+            font-size: 16px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: calc(100vh);
+        }
+
+        .bg {
+            /* background-image: url('/static/img/bg.jpg'); */
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-position: center left;
+            background-size: cover;
+            position: fixed;
+            width: 100%;
+            height: calc(100vh + var(--safeareainsetbottom));
+            z-index: -1;
+        }
+
+        .container {
+            width: auto;
+            margin: 0 auto;
+            padding: 0;
+            padding-top: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+            max-width: 640px;
+        }
+
+        .black_box {
+            width: 100%;
+            background-color: #0D0D0D;
+            color: #E50012;
+            text-align: center;
+            padding: 15px;
+            margin: 0 4px;
+            border: 1px solid transparent;
+            transition-duration: 0.1s;
+        }
+
+        .black_box:active {
+            border: 1px solid #E50012;
+            box-shadow: 0 0 20px 5px #E50012;
+            text-shadow: 0 0 10px #E50012;
+        }
+
+        .momo_area {
+            margin: 50px 0 0 0;
+        }
+
+        .momo {
+            display: block;
+            width: 40%;
+            margin: 0 auto;
+            user-select: none;
+        }
+
+        .color_area {
+            padding: 10px;
+        }
+
+        .color_wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin: 0;
+        }
+
+        .color_wrapper>div::before {
+            padding-top: 100%;
+            content: "";
+            display: block;
+        }
+
+        .color_btn {
+            width: 25%;
+            border-radius: 50%;
+            margin: 1%;
+            transition-duration: 0.15s;
+        }
+
+        .color_btn:active {
+            transform: scale(0.9);
+        }
+
+        .pattern_area {
+            padding: 5px;
+        }
+
+        .pattern_wrapper {
+            width: 100%;
+            display: flex;
+            margin: 0 0 8px 0;
+        }
+
+        .pattern_btn {}
+
+        .pattern_btn:active {}
+    </style>
+</head>
+
+<body ontouchstart>
+    <div class="bg"></div>
+    <div class="container">
+        {% block main %} {% endblock %}
+    </div>
+</body>
+
+</html>

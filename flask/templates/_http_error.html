@@ -1,0 +1,43 @@
+{% extends "_layout.html" %}
+
+<!-- title -->
+{% block title %}
+{{ e.code }} {{ e.name }} - {{ super() }}
+{% endblock %}
+
+<!-- head -->
+{% block head %}
+
+{% endblock %}
+
+<!-- menu -->
+{% block menu %}
+<!-- {% include "_menu.html" %} -->
+<div id="menu_list">
+    <div class="menu_element">
+        <a href="{{ url_for('index') }}" class="menu_a">
+            <div class="menu_name">TOP</div>
+            <div class="menu_sub">トップページへ戻る</div>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+<!-- body -->
+{% block main %}
+
+
+<div class="contents">
+    <div class="contents_block">
+        <h1>{{ e.code }} {{ e.name }}</h1>
+    </div>
+
+
+    <div class="contents_block">
+        <p>{{ e.description }}</p>
+    </div>
+
+</div>
+
+
+{% endblock %}

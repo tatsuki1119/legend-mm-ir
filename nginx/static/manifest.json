@@ -1,0 +1,10 @@
+{
+    "name": "LEGEND-MM",
+    "short_name": "LEGEND-MM",
+    "display": "standalone",
+    "scope": "/app/",
+    "start_url": "/app/",
+    "theme_color": "#550000",
+    "background_color": "#F09199",
+    "orientation": "any"
+}
