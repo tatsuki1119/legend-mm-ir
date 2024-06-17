@@ -6,7 +6,7 @@ from time import sleep
 import smbus
 
 # データ配置用ディレクトリ
-DATA_DIR = "/home/tatsu/piz/flask/ir_data"
+DATA_DIR = "/home/momo/piz/flask/ir_data"
 
 
 def json_to_dict(input_path: str) -> dict:
