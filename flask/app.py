@@ -10,10 +10,10 @@ from flask import Flask, abort, redirect, render_template, request, session, url
 from flask_session import Session
 
 APP_PASSWORD = "0303"
-APP_DIR = "/home/tatsu/piz/flask"
+APP_DIR = "/home/momo/piz/flask"
 
 # データ配置用ディレクトリ
-DATA_DIR = "/home/tatsu/piz/flask/ir_data"
+DATA_DIR = "/home/momo/piz/flask/ir_data"
 
 MODE_LIST = ["custom"]
 COLOR_LIST = ["momo", "w", "r", "g", "b", "c", "m", "y"]
